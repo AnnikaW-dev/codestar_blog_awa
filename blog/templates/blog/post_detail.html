@@ -59,7 +59,7 @@
                         </span> wrote:
                     </p>
                     <div id="comment{{ comment.id }}">
-                        {{ comment.body | linebreaks }}
+                        {{ comment.body }}
                     </div>
                     {% if not comment.approved and comment.author == user %}
                     <p class="approval">
