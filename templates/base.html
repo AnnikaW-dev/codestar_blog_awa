@@ -77,6 +77,11 @@
                 </ul>
                 <span class="navbar-text text-muted">
                     adventures of a software developer
+                    {% if user.is_authenticated %}
+                    <p class="text-end m-3">You are loged in as {{ user }}</p>
+                    {% else %}
+                    <p class="text-end m-3">You are not logged in</p>
+                    {% endif %} 
                 </span>
             </div>
         </div>
