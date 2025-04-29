@@ -63,19 +63,19 @@ def comment_edit(request, slug, comment_id):
 
         queryset = Post.objects.filter(status=1)
         post = get_object_or_404(queryset, slug=slug)
-        comment = get_object_or_404(Comment, pk=comment_id)
-        comment_form = CommentForm(data=request.POST, instance=comment)
+        comment = get_object_or_404(Comment, pk=comment_id)                 # we gett the relevant Comment instance from the database using  comment_id provided in URL
+        comment_form = CommentForm(data=request.POST, instance=comment)     # we use the CommentForm class to access the edit Comment data submitted by user and by specify ing instance=comment any changes made to the formwill be applied to the existing Comment.
 
-        if comment_form.is_valid() and comment.author == request.user:
+        if comment_form.is_valid() and comment.author == request.user:      #Inside the comment_edit view, we check if the form is valid and if the author of the comment is also the logged-in user:
             comment = comment_form.save(commit=False)
             comment.post = post
-            comment.approved = False
-            comment.save()
+            comment.approved = False                                        #If these checks pass, the existing comment is updated, and the approved state is set back to False with
+            comment.save()                                                  # Then it is saved back to the database in the same way we save a new comment in the post_detail view.
             messages.add_message(request, messages.SUCCESS, 'Comment Updated!')
         else:
             messages.add_message(request, messages.ERROR, 'Error updating comment!')
 
-    return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+    return HttpResponseRedirect(reverse('post_detail', args=[slug]))        # HttpResponseRedirect is a Django class that tells the browser to go to a different URL. reverse is a Django function that constructs a URL from the provided URL path name and any relevant URL arguments: args=[slug].
 
 def comment_delete(request, slug, comment_id):
     """
@@ -92,4 +92,3 @@ def comment_delete(request, slug, comment_id):
         messages.add_message(request, messages.ERROR, 'You can only delete your own comments!')
 
     return HttpResponseRedirect(reverse('post_detail', args=[slug]))
-    
