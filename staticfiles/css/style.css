@@ -96,6 +96,10 @@ body {
     color: #445261;
 }
 
+.profile-image {
+    width: 75%;
+}
+
 .post-link:hover,
 .page-link {
     color: #E84610;
